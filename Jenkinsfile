@@ -1,32 +1,58 @@
-pipeline{
-  agent{'label = Jenkins-Agent}
-  tools{
-    jdk 'java17'
-    maven 'maven3'
-  }
-  stage{
-    stage('Cleanup Workspace'){
-      step{
-        cleanWs()
-      }
-  }
-  stage{
-    stage('Checkout from SCM'){
-      step{
-        git branch: 'main', cendentialId: 'github', url: 'https://github.com/esu8500/register-app'
-      }
-  }
-  stage{
-    stage('Build Application'){
-      step{
-        sh "maven clean package"
-      }
+pipeline {
+    agent { label 'Jenkins-Agent' }
+    tools {
+        jdk 'java17'
+        maven 'maven3'
     }
-    stage{
-    stage('Test Appcation'){
-      step{
-        sh "mvn Test"
-      }
+    stages {
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout from SCM') {
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/esu8500/register-app'
+            }
+        }
+        stage('Build Application') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test Application') {
+            steps {
+                sh 'mvn test'
+            }
+        }
     }
-  }  
-    
+}
+pipeline {
+    agent { label 'Jenkins-Agent' }
+    tools {
+        jdk 'java17'
+        maven 'maven3'
+    }
+    stages {
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        stage('Checkout from SCM') {
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/esu8500/register-app'
+            }
+        }
+        stage('Build Application') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test Application') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
